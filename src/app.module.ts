@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getMongoURI } from './config/mongo.config';
+import { ConfigModule } from '@nestjs/config';
+import { getMongoConfig } from './config/mongo.config';
 
 @Module({
   imports: [
@@ -12,11 +12,7 @@ import { getMongoURI } from './config/mongo.config';
       envFilePath: ['.env', '.env.development', '.env.development.local'],
     }),
     AuthModule,
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getMongoURI,
-    }),
+    MongooseModule.forRootAsync(getMongoConfig()),
   ],
 
   controllers: [AppController],
