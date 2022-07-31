@@ -16,7 +16,6 @@ export class UserRepository {
 
   /**
    * Создать пользователя в БД
-   * @param {UserEntity} user
    */
   async createUser(user: UserEntity) {
     const newUser = new this.userModel(user);
@@ -25,7 +24,7 @@ export class UserRepository {
 
   /**
    * Найти пользователя в БД по его почте
-   * @param {string} email
+   *
    */
   async findUser(email: string) {
     return this.userModel.findOne({ email }).exec();
