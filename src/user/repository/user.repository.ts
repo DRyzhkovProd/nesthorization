@@ -1,5 +1,5 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { UserModel } from '../user.model';
+import { UserModel, UserRole } from '../user.model';
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from '../entities/user.entity';
@@ -28,5 +28,21 @@ export class UserRepository {
    */
   async findUser(email: string) {
     return this.userModel.findOne({ email }).exec();
+  }
+
+  /**
+   * Сменить роль пользователю
+   * @param {string} id
+   * @param {UserRole} role
+   */
+  async changeUserRole(id: string, role: UserRole) {
+    return this.userModel.findByIdAndUpdate(id, { role }).exec();
+  }
+
+  /**
+   * Получить всех пользователей из базы
+   */
+  async getAllUsers() {
+    return this.userModel.find().exec();
   }
 }
